@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 
+import json
+import uuid
+
 from flask import Flask
+from flask import request
+from flask import make_response
 app = Flask(__name__)
 
 @app.route('/')
@@ -13,18 +18,36 @@ def api_docs():
 
 @app.route('/api/items',methods=['GET'])
 def get_items():
-    return "All Items Listed"
+    resp = make_response(str(db))
+    resp.headers["Content-Type"] = "text/json"
+    return resp
 
 @app.route('/api/items',methods=['POST'])
 def add_new_item():
-    return "Add a new item"
+    try:
+        name = request.form["name"]
+    except KeyError:
+        return "Error - No Name Provided"
 
-@app.route('/api/items',methods=['PUT'])
-def modify_item():
+    try: 
+        category = request.form["category"]
+    except KeyError:
+        category = "uncategorized"
+
+    ret = db.add(name,category)
+
+    return db.hash()
+
+@app.route('/api/items/<uuid:item_id>',methods=['PUT'])
+def modify_item(item_id):
     return "Modify an item"
+    db.modify(item_id,request.form["name"], request.form["category"])
+    return db.hash()
 
-@app.route('/api/items',methods=['DELETE'])
-def delete_item():
+@app.route('/api/items/<uuid:item_id>',methods=['DELETE'])
+def delete_item(item_id):
     return "Delete an Item"
+    ret = db.delete(item_id)
+
 
 
