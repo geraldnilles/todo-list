@@ -8,9 +8,12 @@ from flask import request
 from flask import make_response
 app = Flask(__name__)
 
+import storage
+db = storage.storage("todolist.json")
+
 @app.route('/')
 def main():
-    return "Main Index"
+    return "Main Index Template"
 
 @app.route('/api/')
 def api_docs():
