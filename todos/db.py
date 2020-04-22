@@ -3,6 +3,7 @@ import uuid
 import json
 import hashlib
 import time
+import threading
 
 from flask import current_app
 
@@ -14,7 +15,7 @@ class storage:
         self._read()
         self.last_write = time.time()
         self._write()
-        print("Starting db")
+        self.lock = threading.Lock()
 
     def _write(self):
         with open(self.filename,"w") as fp:
@@ -31,11 +32,13 @@ class storage:
         return json.dumps(self.db)
     
     def add(self,name, category):
+        self.lock.acquire()
         item_id = str(uuid.uuid4())
         self.db[item_id] = {}
         self.db[item_id]["name"] = name
         self.db[item_id]["category"] = category
         self._write()
+        self.lock.release()
         return item_id
 
     def hash(self):
@@ -44,21 +47,31 @@ class storage:
         return m.hexdigest()
 
     def modify(self,item_id,name,category):
-        self.db[item_id]["name"] = name
-        self.db[item_id]["category"] = category
+        self.lock.acquire()
+        try:
+            self.db[item_id]["name"] = name
+            self.db[item_id]["category"] = category
+        except KeyError:
+            self.lock.release()
+            return False
+
         self._write()
+        self.lock.release()
         return True
 
     def delete(self,item_id):
+        self.lock.acquire()
         try:
             del self.db[item_id]
         except KeyError:
-            return    
+            self.lock.release()
+            return False
         self._write()
+        self.lock.release()
         return True
 
-
 db = storage(current_app.config["DATABASE"])
+
 
 
 if __name__ == "__main__":
