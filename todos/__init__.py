@@ -1,6 +1,7 @@
 
 import os
 from flask import Flask
+from flask import render_template
 
 
 def create_app(test_config=None):
@@ -18,6 +19,11 @@ def create_app(test_config=None):
 
     with app.app_context():
         from . import db
+
+
+    @app.route('/')
+    def main(name=None):
+        return render_template('main.html', name=name)
 
     @app.route("/hello")
     def hello():
