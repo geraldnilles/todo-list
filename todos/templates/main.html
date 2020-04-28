@@ -37,59 +37,20 @@
 
 
         <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between" >
-                <span class="h5" > Steak </span>
-                <span>
-                    <button type="button" class="btn btn-outline-danger mr-2">Meat</button>
-                    <input type="checkbox" test="form-check-input" />
-                </span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between" >
-                <span class="h5" >Milk</span>
-                <span>
-                    <button type="button" class="btn btn-outline-info mr-2">Dairy</button>
-                    <input type="checkbox" test="form-check-input" />
-                </span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between" >
-                <span class="h5" >Kale</span>
-                <span>
-                    <button type="button" class="btn btn-outline-success mr-2">Produce</button>
-                    <input type="checkbox" test="form-check-input" />
-                </span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between" >
-                <span class="h5" >
-                    Ice Cream 
-                    <button type="button" class="btn btn-outline-primary ml-2">Freezer</button>
-                </span>
-                <span class="h5 ml-2">
-                    <input type="checkbox" test="form-check-input" />
-                </span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between" >
-                <span class="h5" >
-                    A very long task to see how line breaks work 
-                    <button type="button" class="btn btn-outline-secondary ml-2">Other</button>
-                </span>
-                <span class="h5 ml-2">
-                    <input type="checkbox" test="form-check-input" />
-                </span>
-            </li>
         </ul>
     <template id="task_tmpl">
-            <li class="list-group-item d-flex justify-content-between" >
-                <span class="h5" >
-                    <span>name</span>
-                    <button type="button" 
-                            class="btn btn-outline-secondary ml-2">
-                        category
-                    </button>
-                </span>
-                <span class="h5 ml-2">
-                    <input type="checkbox" test="form-check-input" />
-                </span>
-            </li>
+        <li class="list-group-item d-flex justify-content-between" >
+            <span class="h5" >
+                <span class="task_name" >name</span>
+                <button type="button" 
+                        class="btn btn-outline-secondary ml-2 task_category">
+                    category
+                </button>
+            </span>
+            <span class="h5 ml-2">
+                <input type="checkbox" test="form-check-input" />
+            </span>
+        </li>
     </template>
     </div>
 </div>

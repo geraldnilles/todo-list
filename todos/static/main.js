@@ -34,7 +34,31 @@ function bind_form(){
 }
 
 
+function render_list(list){
+    var dom_list = document.querySelector("ul");
+    var template = document.querySelector("template");
+    for (var key in list){
+        var new_item = template.content.cloneNode(true);
+        new_item.querySelector(".task_name").textContent = list[key]["name"]; 
+        new_item.querySelector(".task_category").textContent = list[key]["category"]; 
+        dom_list.appendChild(new_item);
+    }
+    bind_checkboxes();
+}
+
 bind_form();
 bind_checkboxes();
 
 
+render_list({
+        "200":{
+            "name":"Wine",
+            "category":"Other",
+            "completed": false
+        },
+        "100":{
+            "name":"Meat",
+            "category":"Other",
+            "completed": false
+        }
+    });
