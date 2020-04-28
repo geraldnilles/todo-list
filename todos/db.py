@@ -40,7 +40,7 @@ class storage:
         self.db[item_id] = {}
         self.db[item_id]["name"] = name
         self.db[item_id]["category"] = category
-        self.db[item_id]["completed"] = 0
+        self.db[item_id]["completed"] = False
         self.db[item_id]["time_created"] = time.time()
         self._write()
         self.lock.release()

@@ -22,7 +22,10 @@
                         class="form-control" 
                         placeholder="Enter new item..." 
                         aria-label="Enter new item... " 
+                        name="name"
                         aria-describedby="button-addon2" />
+                <input type="hidden" name="category" value="other" />
+                <input type="hidden" name="list" value="groceries" />
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" 
                             type="submit" 
@@ -74,6 +77,20 @@
                 </span>
             </li>
         </ul>
+    <template id="task_tmpl">
+            <li class="list-group-item d-flex justify-content-between" >
+                <span class="h5" >
+                    <span>name</span>
+                    <button type="button" 
+                            class="btn btn-outline-secondary ml-2">
+                        category
+                    </button>
+                </span>
+                <span class="h5 ml-2">
+                    <input type="checkbox" test="form-check-input" />
+                </span>
+            </li>
+    </template>
     </div>
 </div>
 

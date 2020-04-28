@@ -31,7 +31,7 @@ def add_new_item():
     try: 
         category = request.form["category"]
     except KeyError:
-        category = "uncategorized"
+        category = "other"
 
     ret = db.db.add(name,category)
 
@@ -39,7 +39,7 @@ def add_new_item():
 
 @bp.route('/items/<uuid:item_id>',methods=['PUT'])
 def modify_item(item_id):
-    db.db.modify(str(item_id),request.form["name"], request.form["category"])
+    db.db.modify(str(item_id),request.form["name"], request.form["category"], request.form["completed"])
     return db.db.hash()
 
 
