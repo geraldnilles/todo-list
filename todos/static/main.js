@@ -19,6 +19,13 @@ function bind_checkboxes(){
 function add_task(e){
     var formData = new FormData(e.target);
     var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // TODO CHeck if hash changed noticablly. If not, then return
+            // Otherwise pull down the latest DB
+            download_db();
+        }
+    };
     request.open("POST", "api/items");
     request.send(formData);
 }
@@ -33,9 +40,22 @@ function bind_form(){
     }
 }
 
+function download_db(){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Conver the database to JSON and render
+            render_list(JSON.parse(request.responseText));
+        }
+    };
+    request.open("GET", "api/items");
+    request.send();
+    
+}
 
 function render_list(list){
     var dom_list = document.querySelector("ul");
+    dom_list.innerHTML='';
     var template = document.querySelector("template");
     for (var key in list){
         var new_item = template.content.cloneNode(true);
@@ -49,16 +69,5 @@ function render_list(list){
 bind_form();
 bind_checkboxes();
 
+download_db();
 
-render_list({
-        "200":{
-            "name":"Wine",
-            "category":"Other",
-            "completed": false
-        },
-        "100":{
-            "name":"Meat",
-            "category":"Other",
-            "completed": false
-        }
-    });
