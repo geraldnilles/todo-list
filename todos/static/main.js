@@ -12,6 +12,10 @@ function bind_checkboxes(){
             } else {
                 li.classList.remove("list-group-item-dark");
             }
+
+            var uuid = li.getAttribute("uuid");
+            console.log(uuid);
+
 		}
 	}
 }
@@ -58,7 +62,11 @@ function render_list(list){
     dom_list.innerHTML='';
     var template = document.querySelector("template");
     for (var key in list){
-        var new_item = template.content.cloneNode(true);
+        // Make a copy of the template element
+        var new_item = template.content.firstElementChild.cloneNode(true);
+        // Embed UUID into li node
+        new_item.setAttribute("uuid",key);
+        // Modify name and category
         new_item.querySelector(".task_name").textContent = list[key]["name"]; 
         new_item.querySelector(".task_category").textContent = list[key]["category"]; 
         dom_list.appendChild(new_item);
