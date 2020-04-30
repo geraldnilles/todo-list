@@ -53,6 +53,14 @@ class storage:
 
     def modify(self,item_id,name,category,completed):
         self.lock.acquire()
+
+        # FormData in browsers converts everything to a string.
+        # THis shoudl catch that and convert to bool
+        if completed in [True, 1, "true", "True"]:
+            completed = True
+        else:
+            completed = False
+            
         try:
             self.db[item_id]["name"] = name
             self.db[item_id]["category"] = category
@@ -61,6 +69,7 @@ class storage:
         except KeyError:
             self.lock.release()
             return False
+ 
 
         self._write()
         self.lock.release()

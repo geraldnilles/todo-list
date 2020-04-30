@@ -7,20 +7,51 @@ function bind_checkboxes(){
 		var c = checkboxes[i];
 		c.onchange = function(e){
             var li = e.target.closest("li");
-            if (e.target.checked){
-                li.classList.add("list-group-item-dark");
-            } else {
-                li.classList.remove("list-group-item-dark");
-            }
+            set_task_color(li);
 
-            var uuid = li.getAttribute("uuid");
-            console.log(uuid);
+            // TODO Set PUT command to edit this UUID
+            modify_task(li);
 
 		}
 	}
 }
 
+function set_task_color(li){
+    
+    if (li.querySelector("input[type='checkbox']").checked) {
+        li.classList.add("list-group-item-dark");
+    } else {
+        li.classList.remove("list-group-item-dark");
+    }
+
+}
+
+function modify_task(li) {
+    var formData = new FormData();
+    formData.append("name",li.querySelector(".task_name").textContent);
+    formData.append("category",li.querySelector(".task_category").textContent);
+    formData.append("completed",li.querySelector("input[type='checkbox']").checked);
+
+
+    var uuid = li.getAttribute("uuid");
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // TODO CHeck if hash changed noticablly. If not, then return
+            // Otherwise pull down the latest DB
+            download_db();
+        }
+    };
+    request.open("PUT", "api/items/"+uuid);
+    request.send(formData);
+}
+
+
 function add_task(e){
+    if (e.target.querySelector("input").value == "" ){
+        return;
+    }
     var formData = new FormData(e.target);
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -28,6 +59,7 @@ function add_task(e){
             // TODO CHeck if hash changed noticablly. If not, then return
             // Otherwise pull down the latest DB
             download_db();
+            e.target.querySelector("input").value="";
         }
     };
     request.open("POST", "api/items");
@@ -69,6 +101,9 @@ function render_list(list){
         // Modify name and category
         new_item.querySelector(".task_name").textContent = list[key]["name"]; 
         new_item.querySelector(".task_category").textContent = list[key]["category"]; 
+        new_item.querySelector("input[type='checkbox']").checked = list[key]["completed"];
+        
+        set_task_color(new_item);
         dom_list.appendChild(new_item);
     }
     bind_checkboxes();
