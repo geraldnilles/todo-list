@@ -9,11 +9,34 @@ function bind_checkboxes(){
             var li = e.target.closest("li");
             set_task_color(li);
 
-            // TODO Set PUT command to edit this UUID
             modify_task(li);
 
 		}
 	}
+}
+
+function bind_task_edit(){
+    var task_names = document.querySelectorAll(".task_name");
+	for (var i = 0; i < task_names.length; i++){
+        var t = task_names[i];
+        t.onclick = function(e){
+            // Remove the on-click for now so that we cant add more buttons
+            e.target.onclick = null;
+
+            // TODO Replace this with an HTML template
+            var textbox = document.createElement("input");
+            textbox.setAttribute("type","text");
+            textbox.value = e.target.textContent;
+            e.target.innerHTML = "";
+            e.target.appendChild(textbox);
+
+            var trash = document.createElement("button");
+            trash.innerHTML="Delete";
+            e.target.appendChild(trash);
+        }
+        
+        t.addEventListener("touchStart", t.onclick, false);
+    }
 }
 
 function set_task_color(li){
@@ -106,11 +129,20 @@ function render_list(list){
         set_task_color(new_item);
         dom_list.appendChild(new_item);
     }
-    bind_checkboxes();
+    bind_list();
 }
 
-bind_form();
-bind_checkboxes();
+function bind_list(){
+    bind_checkboxes();
+    bind_task_edit();
+}
+
+function bind_all(){
+    bind_list();
+    bind_form();
+}
+
+bind_all();
 
 download_db();
 
