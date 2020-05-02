@@ -21,18 +21,9 @@ function bind_task_edit(){
         var t = task_names[i];
         t.onclick = function(e){
             // Remove the on-click for now so that we cant add more buttons
-            e.target.onclick = null;
+            var li = e.target.closest("li");
+            render_task_edit(li);
 
-            // TODO Replace this with an HTML template
-            var textbox = document.createElement("input");
-            textbox.setAttribute("type","text");
-            textbox.value = e.target.textContent;
-            e.target.innerHTML = "";
-            e.target.appendChild(textbox);
-
-            var trash = document.createElement("button");
-            trash.innerHTML="Delete";
-            e.target.appendChild(trash);
         }
         
         t.addEventListener("touchStart", t.onclick, false);
@@ -112,10 +103,20 @@ function download_db(){
     
 }
 
+function render_task_edit(li){
+    var template = document.querySelector("#task_edit_tmpl");
+    var new_item = template.content.cloneNode(true);
+    new_item.querySelector("input").value = li.querySelector(".task_name").textContent;
+    li.innerHTML= "";
+    li.appendChild(new_item);
+    
+    
+}
+
 function render_list(list){
     var dom_list = document.querySelector("ul");
     dom_list.innerHTML='';
-    var template = document.querySelector("template");
+    var template = document.querySelector("#task_tmpl");
     for (var key in list){
         // Make a copy of the template element
         var new_item = template.content.firstElementChild.cloneNode(true);
