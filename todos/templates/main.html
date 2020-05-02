@@ -52,19 +52,13 @@
     </template>
 
     <template id="task_edit_tmpl">
-        <span class="h5" >
-            <input type="text" />
-        </span>
-        <span>
-            <button type="button" 
-                    class="btn btn-outline-secondary ml-2 task_category">
-                        Delete
-            </button>
-            <button type="button" 
-                    class="btn btn-outline-secondary ml-2 task_category">
-                        Abort
-            </button>
-        </span>
+        <div class="input-group">
+          <input type="text" class="form-control" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">Delete</button>
+            <button class="btn btn-outline-secondary" type="button">Abort</button>
+          </div>
+        </div>
     </template>
 
     </div>
