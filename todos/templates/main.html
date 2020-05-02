@@ -53,13 +53,16 @@
     </template>
 
     <template id="task_edit_tmpl">
-        <div class="input-group">
-          <input type="text" class="form-control" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn btn-danger" type="button"><i class="material-icons">delete</i></button>
-            <button class="btn btn-secondary" type="button"><i class="material-icons">undo</i></button>
-          </div>
-        </div>
+        <form>
+            <div class="input-group">
+                <input type="text" class="form-control" aria-describedby="basic-addon2" name="name" />
+                <input type="hidden" name="category" />
+                <div class="input-group-append">
+                    <button class="btn btn-danger task_delete" type="button"><i class="material-icons">delete</i></button>
+                    <button class="btn btn-secondary task_undo" type="button"><i class="material-icons">undo</i></button>
+                </div>
+            </div>
+        </form>
     </template>
 
     </div>

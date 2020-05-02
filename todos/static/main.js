@@ -104,11 +104,35 @@ function download_db(){
 }
 
 function render_task_edit(li){
+    // If an item is already being edited, then ignore any further edit
+    // requests
+    var numForms = document.querySelectorAll("form").length;
+    if (numForms > 1) {
+        return
+    }
+
     var template = document.querySelector("#task_edit_tmpl");
     var new_item = template.content.cloneNode(true);
-    new_item.querySelector("input").value = li.querySelector(".task_name").textContent;
+    // Embed the existing data into the redndering element
+    new_item.querySelector("input[name='name']").value = li.querySelector(".task_name").textContent;
+    new_item.querySelector("input[name='category']").value = li.querySelector(".task_category").textContent;
     li.innerHTML= "";
     li.appendChild(new_item);
+    // TODO Bind to Form Submit, call the PUT command to modify the elemnt
+    li.querySelector("form").onsubmit = function(e){
+        e.preventDefault();
+        console.log("TODO Submit Edit");
+        // Re-render this list item back to its original state (Check will be unchecked)
+        // Call the modify_task(li) with the re-rendered li element
+    };
+    // TODO Bind to DELETE button, call the DELETE command
+    li.querySelector("button.task_delete").onclick = function(e){
+        console.log("TODO Delete Task");
+    };
+    // If the undo button is pressed, redownload the list from the server database
+    li.querySelector("button.task_undo").onclick = function(e){
+        download_db();
+    };
 }
 
 function render_list(list){
