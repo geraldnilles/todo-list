@@ -109,8 +109,6 @@ function render_task_edit(li){
     new_item.querySelector("input").value = li.querySelector(".task_name").textContent;
     li.innerHTML= "";
     li.appendChild(new_item);
-    
-    
 }
 
 function render_list(list){
