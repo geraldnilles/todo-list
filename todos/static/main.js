@@ -23,6 +23,7 @@ function bind_category_dropdowns(){
             // Update the button Label
             li.querySelector(".task_category").textContent = e.target.textContent; 
             // Send the change to the server
+            set_task_color(li);
             modify_task(li);
 		}
 	}
@@ -50,7 +51,24 @@ function set_task_color(li){
     } else {
         li.classList.remove("list-group-item-dark");
     }
+   
+    // Set the catagory Button Color
+    var b = li.querySelector(".task_category");
+    let color_code = {
+        "Other": "btn-outline-secondary",
+        "Dairy": "btn-outline-primary",
+        "Produce": "btn-outline-success",
+        "Freezer": "btn-outline-info",
+        "Meat": "btn-outline-danger"
+    }
 
+    // Wipe out previous color data
+    for (var key in color_code){
+       b.classList.remove(color_code[key]); 
+    }
+
+    b.classList.add(color_code[b.textContent]);
+    
 }
 
 function modify_task(li) {
