@@ -15,6 +15,19 @@ function bind_checkboxes(){
 	}
 }
 
+function bind_category_dropdowns(){
+    var dropdowns = document.querySelectorAll("a.dropdown-item");
+	for (var i = 0; i < dropdowns.length; i++){
+		dropdowns[i].onclick = function(e){
+            var li = e.target.closest("li");
+            // Update the button Label
+            li.querySelector(".task_category").textContent = e.target.textContent; 
+            // Send the change to the server
+            modify_task(li);
+		}
+	}
+}
+
 function bind_task_edit(){
     var task_names = document.querySelectorAll(".task_name");
 	for (var i = 0; i < task_names.length; i++){
@@ -45,7 +58,6 @@ function modify_task(li) {
     formData.append("name",li.querySelector(".task_name").textContent);
     formData.append("category",li.querySelector(".task_category").textContent);
     formData.append("completed",li.querySelector("input[type='checkbox']").checked);
-
 
     var uuid = li.getAttribute("uuid");
 
@@ -176,6 +188,7 @@ function render_list(list){
 function bind_list(){
     bind_checkboxes();
     bind_task_edit();
+    bind_category_dropdowns();
 }
 
 function bind_all(){
