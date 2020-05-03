@@ -25,7 +25,7 @@
                         aria-label="Enter new item... " 
                         name="name"
                         aria-describedby="button-addon2" />
-                <input type="hidden" name="category" value="other" />
+                <input type="hidden" name="category" value="Other" />
                 <input type="hidden" name="list" value="groceries" />
                 <div class="input-group-append">
                     <button class="btn btn-success" 
@@ -43,8 +43,17 @@
         <li class="list-group-item d-flex justify-content-between" >
             <span class="h5" >
                 <span class="task_name" ></span>
-                <button type="button" 
-                        class="btn btn-outline-secondary ml-2 task_category"></button>
+                <span class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle task_category" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Dairy</a>
+                        <a class="dropdown-item" href="#">Produce</a>
+                        <a class="dropdown-item" href="#">Meat</a>
+                        <a class="dropdown-item" href="#">Freezer</a>
+                        <a class="dropdown-item" href="#">Other</a>
+                    </div>
+                </span>
             </span>
             <span class="h5 ml-2">
                 <input type="checkbox" test="form-check-input" />
