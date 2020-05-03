@@ -39,7 +39,6 @@ function bind_task_edit(){
             render_task_edit(li);
 
         }
-        t.ontouchstart = t.onclick;
         
     }
 }
