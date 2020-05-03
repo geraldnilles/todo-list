@@ -61,6 +61,22 @@ function modify_task(li) {
     request.send(formData);
 }
 
+function delete_task(li) {
+
+    var uuid = li.getAttribute("uuid");
+    // TODO Delete DOM element
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // TODO CHeck if hash changed noticablly. If not, then return
+            // Otherwise pull down the latest DB
+            download_db();
+        }
+    };
+    request.open("DELETE", "api/items/"+uuid);
+    request.send();
+}
 
 function add_task(e){
     if (e.target.querySelector("input").value == "" ){
@@ -125,9 +141,11 @@ function render_task_edit(li){
         // Re-render this list item back to its original state (Check will be unchecked)
         // Call the modify_task(li) with the re-rendered li element
     };
-    // TODO Bind to DELETE button, call the DELETE command
     li.querySelector("button.task_delete").onclick = function(e){
-        console.log("TODO Delete Task");
+        // THis lookup might be unncesary since there shoudl only be 1 delete
+        // button at a time, but just in case:
+        delete_task(e.target.closest("li"));
+
     };
     // If the undo button is pressed, redownload the list from the server database
     li.querySelector("button.task_undo").onclick = function(e){
