@@ -34,12 +34,14 @@ class storage:
     def __str__(self):
         return json.dumps(self.db)
     
-    def add(self,name, category):
+    def add(self,name, category, list_name):
         self.lock.acquire()
         item_id = str(uuid.uuid4())
         self.db[item_id] = {}
         self.db[item_id]["name"] = name
         self.db[item_id]["category"] = category
+        self.db[item_id]["list"] = list_name
+        # New Tasks are incomplete by default
         self.db[item_id]["completed"] = False
         self.db[item_id]["time_created"] = time.time()
         self._write()

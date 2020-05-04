@@ -31,9 +31,14 @@ def add_new_item():
     try: 
         category = request.form["category"]
     except KeyError:
-        category = "other"
+        category = "Other"
 
-    ret = db.db.add(name,category)
+    try: 
+        list_name = request.form["list"]
+    except KeyError:
+        category = "Groceries"
+
+    ret = db.db.add(name,category,list_name)
 
     return db.db.hash()
 
