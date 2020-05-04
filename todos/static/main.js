@@ -125,13 +125,29 @@ function add_task(e){
 }
 
 function bind_form(){
-    var f = document.querySelector("form");
+    var f = document.querySelector("form.main");
     f.onsubmit = function(e){
         // Do not submit the form and refresh the page
         // We will use XHR instead
         e.preventDefault();
         add_task(e);
     }
+}
+
+function bind_toggle(){
+    var bg = document.querySelector("div.btn-group");
+    var buttons = bg.querySelectorAll("button");
+    buttons.forEach(function(b){
+        b.onclick = function(e){
+            buttons.forEach(function(a){
+                a.classList.remove("active"); 
+            });
+            e.target.classList.add("active");
+
+            var f = document.querySelector("form.main");
+            f.querySelector("input[name='list']").value = e.target.textContent;
+        }
+    });
 }
 
 function download_db(){
@@ -256,6 +272,7 @@ function bind_list(){
 function bind_all(){
     bind_list();
     bind_form();
+    bind_toggle();
 }
 
 bind_all();
