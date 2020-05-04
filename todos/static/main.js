@@ -134,6 +134,16 @@ function bind_form(){
     }
 }
 
+function get_list_name(){
+    var f = document.querySelector("form.main");
+    return f.querySelector("input[name='list']").value;
+}
+
+function set_list_name(list_name){
+    var f = document.querySelector("form.main");
+    f.querySelector("input[name='list']").value = list_name;
+}
+
 function bind_toggle(){
     var bg = document.querySelector("div.btn-group");
     var buttons = bg.querySelectorAll("button");
@@ -144,8 +154,8 @@ function bind_toggle(){
             });
             e.target.classList.add("active");
 
-            var f = document.querySelector("form.main");
-            f.querySelector("input[name='list']").value = e.target.textContent;
+            set_list_name(e.target.textContent);
+            download_db();
         }
     });
 }
@@ -247,7 +257,12 @@ function render_list(raw_list){
     var dom_list = document.querySelector("ul");
     dom_list.innerHTML='';
     var template = document.querySelector("#task_tmpl");
+    var list_name = get_list_name();
     for (var key in list){
+        // Filter out items that are not part of this list
+        if (list[key]["list"] != list_name){
+            continue;
+        }
         // Make a copy of the template element
         var new_item = template.content.firstElementChild.cloneNode(true);
         // Embed UUID into li node
