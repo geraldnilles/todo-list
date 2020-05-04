@@ -54,6 +54,9 @@ function set_task_color(li){
     var b = li.querySelector(".task_category");
     let color_code = {
         "Other": "btn-outline-secondary",
+        "Toiletries": "btn-outline-secondary",
+        "Packaged": "btn-outline-dark",
+        "Supplies": "btn-outline-warning",
         "Dairy": "btn-outline-primary",
         "Produce": "btn-outline-success",
         "Freezer": "btn-outline-info",
