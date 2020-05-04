@@ -182,7 +182,32 @@ function render_task_edit(li){
     };
 }
 
-function render_list(list){
+// This creates a sorted copy of the database list
+function sorted_list(raw_list){
+    var keys = Object.keys(raw_list);
+    keys.sort(function(a,b){
+        var d = 0;
+        d = raw_list[a]["completed"]-raw_list[b]["completed"];
+        if (d != 0 ){
+            return d;
+        }
+        d = raw_list[a]["category"].localeCompare(raw_list[b]["category"]);
+        if (d != 0 ){
+            return d;
+        }
+        d = raw_list[a]["name"].localeCompare(raw_list[b]["name"]);
+        return d;
+    });
+
+    new_list = {};
+    for(var i=0; i<keys.length; i++){
+        new_list[keys[i]] = raw_list[keys[i]];
+    }
+    return new_list;
+}
+
+function render_list(raw_list){
+    var list = sorted_list(raw_list);
     var dom_list = document.querySelector("ul");
     dom_list.innerHTML='';
     var template = document.querySelector("#task_tmpl");
