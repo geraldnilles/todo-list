@@ -37,9 +37,8 @@ function bind_task_edit(){
             // Remove the on-click for now so that we cant add more buttons
             var li = e.target.closest("li");
             render_task_edit(li);
-
+            li.querySelector("input[name='name']").focus();
         }
-        
     }
 }
 
@@ -163,12 +162,19 @@ function render_task_edit(li){
     new_item.querySelector("input[name='category']").value = li.querySelector(".task_category").textContent;
     li.innerHTML= "";
     li.appendChild(new_item);
-    // TODO Bind to Form Submit, call the PUT command to modify the elemnt
+
+    // Called when the new form is submitted
     li.querySelector("form").onsubmit = function(e){
         e.preventDefault();
-        console.log("TODO Submit Edit");
+        let li = e.target.closest("li");
         // Re-render this list item back to its original state (Check will be unchecked)
-        // Call the modify_task(li) with the re-rendered li element
+        var name = e.target.querySelector("input[name='name']").value;
+        var category = e.target.querySelector("input[name='category']").value;
+        // Do this with objects instead of text
+        li.innerHTML = render_task("notused",name,category,false).innerHTML;
+        // Call the modify_task(li) with the re-rendered li elementk
+        modify_task(li);
+
     };
     li.querySelector("button.task_delete").onclick = function(e){
         // THis lookup might be unncesary since there shoudl only be 1 delete
@@ -204,6 +210,20 @@ function sorted_list(raw_list){
         new_list[keys[i]] = raw_list[keys[i]];
     }
     return new_list;
+}
+
+function render_task(key,name,category,completed){
+    var template = document.querySelector("#task_tmpl");
+    var new_item = template.content.firstElementChild.cloneNode(true);
+    // Embed UUID into li node
+    new_item.setAttribute("uuid",key);
+    // Modify name and category
+    new_item.querySelector(".task_name").textContent = name; 
+    new_item.querySelector(".task_category").textContent = category; 
+    new_item.querySelector("input[type='checkbox']").checked = completed;
+
+    set_task_color(new_item);
+    return new_item;
 }
 
 function render_list(raw_list){
