@@ -19,10 +19,9 @@ class storage:
         self.lock = threading.Lock()
 
     def _write(self):
-        pass
         # Not writing to disk during developement
-        #with open(self.filename,"w") as fp:
-        #    json.dump(self.db,fp)
+        with open(self.filename,"w") as fp:
+            json.dump(self.db,fp)
 
     def _read(self):
         try:
