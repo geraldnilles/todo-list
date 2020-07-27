@@ -7,6 +7,8 @@ from flask import Blueprint
 from flask import request
 from flask import make_response
 
+from flask import current_app
+
 from . import db
 
 bp = Blueprint("api", __name__, url_prefix="/api")
@@ -18,6 +20,16 @@ def docs():
 @bp.route('/items',methods=['GET'])
 def get_items():
     resp = make_response(str(db.db))
+    resp.headers["Content-Type"] = "text/json"
+    return resp
+
+@bp.route('/history',methods=['GET'])
+def get_history():
+    fn = current_app.config["HISTORY"]
+    with open(fn) as f:
+        hist = f.read()
+
+    resp = make_response(str(hist))
     resp.headers["Content-Type"] = "text/json"
     return resp
 

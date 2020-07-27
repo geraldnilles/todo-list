@@ -49,6 +49,7 @@ for uuid, item in db.items():
         print ("Adding New Item to History:",item["name"])
         entry = {
             "name": item["name"],
+            "category": item["category"],
             "count": 1
             }
         hist[key] = entry
