@@ -41,6 +41,16 @@ for uuid, item in db.items():
     if item["time_modified"] > ( t_now - (24*60*60) ):
         continue
 
+    # Dete from the database
+    conn = http.client.HTTPConnection("127.0.0.1",7060)
+    conn.request("DELETE","/api/items/"+uuid)
+    print ("Deleted Item",conn.getresponse().status)
+    conn.close()
+
+    # Do not save Movies and TV shows into the autocomplete history database
+    if item["list"] == "WatchList" :
+        continue
+
 
     # Add Item to History
     key = item["name"].lower().strip()
@@ -58,10 +68,6 @@ for uuid, item in db.items():
         print ("Increasing Counter:",item["name"])
         hist[key]["count"] += 1
 
-    conn = http.client.HTTPConnection("127.0.0.1",7060)
-    conn.request("DELETE","/api/items/"+uuid)
-    print ("Deleted Item",conn.getresponse())
-    conn.close()
 
     
 
