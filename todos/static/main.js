@@ -137,6 +137,15 @@ function bind_form(){
     }
 }
 
+function bind_autocomplete(){
+    var i = document.querySelector("form.main div input[type='text']");
+    i.onkeypress = function(e){
+        //alert("Button");
+        // TODO Look for matching items in history
+        // Present them in the suggestions div
+    }
+}
+
 function get_list_name(){
     var f = document.querySelector("form.main");
     return f.querySelector("input[name='list']").value;
@@ -257,7 +266,7 @@ function render_task(key,name,category,completed){
 
 function render_list(raw_list){
     var list = sorted_list(raw_list);
-    var dom_list = document.querySelector("ul");
+    var dom_list = document.querySelector("ul.main");
     dom_list.innerHTML='';
     var template = document.querySelector("#task_tmpl");
     var list_name = get_list_name();
@@ -291,6 +300,7 @@ function bind_all(){
     bind_list();
     bind_form();
     bind_toggle();
+    bind_autocomplete();
 }
 
 bind_all();
