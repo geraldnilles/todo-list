@@ -143,6 +143,9 @@ function bind_autocomplete(){
         //alert("Button");
         // TODO Look for matching items in history
         // Present them in the suggestions div
+
+        //var suggest = document.querySelector("ul.suggest");
+        //suggest.innerHTML = "Test";
     }
 }
 
