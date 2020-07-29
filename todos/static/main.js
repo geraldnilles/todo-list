@@ -267,10 +267,19 @@ function sorted_list(raw_list){
     var keys = Object.keys(raw_list);
     keys.sort(function(a,b){
         var d = 0;
+        // Complete Items always at the bottom of the list
         d = raw_list[a]["completed"]-raw_list[b]["completed"];
         if (d != 0 ){
             return d;
         }
+        // If an item is completed, always sort in reverse chronological from
+        // modification date.  Makes it easier to see when you do accidental
+        // clicks
+        if (raw_list[a]["completed"]){
+            return raw_list[b]["time_modified"]-raw_list[a]["time_modified"];
+
+        }
+        // For incomlpete items, sort by category and then by name
         d = raw_list[a]["category"].localeCompare(raw_list[b]["category"]);
         if (d != 0 ){
             return d;

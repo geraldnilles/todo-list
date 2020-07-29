@@ -67,6 +67,9 @@ for uuid, item in db.items():
     else:
         print ("Increasing Counter:",item["name"])
         hist[key]["count"] += 1
+        # Overwrite latest changes to spelling or category
+        hist[key]["name"] = item["name"]
+        hist[key]["category"] = item["category"]
 
 
     
