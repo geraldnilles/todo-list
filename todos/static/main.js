@@ -161,8 +161,7 @@ function bind_form(){
 }
 
 function bind_autocomplete(){
-    //var i = document.querySelector("form.main div input[type='text']");
-    var i = document.querySelector("form.main div input");
+    var i = document.querySelector("form.main div input[type='text']");
     i.onkeyup = function(e){
         render_suggestions(e.target.value);
     }
@@ -199,8 +198,9 @@ function download_history(){
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             // Load the history file into a variable
-            sug_db = JSON.parse(request.responseText);
-            // TODO Sort the sug_db by number of hits in history counter
+            var db = JSON.parse(request.responseText);
+            // Sort the sug_db by number of hits in history counter
+            sug_db = sorted_suggestions(db);
         }
     };
     request.open("GET", "api/history");
@@ -284,6 +284,26 @@ function sorted_list(raw_list){
         new_list[keys[i]] = raw_list[keys[i]];
     }
     return new_list;
+}
+
+// This creates a sorted copy of the database list
+function sorted_suggestions(db){
+    var keys = Object.keys(db);
+    keys.sort(function(a,b){
+        var d = 0;
+        d = db[b]["count"]-db[a]["count"];
+        if (d != 0 ){
+            return d;
+        }
+        d = db[a]["name"].localeCompare(db[b]["name"]);
+        return d;
+    });
+
+    new_db = {};
+    for(var i=0; i<keys.length; i++){
+        new_db[keys[i]] = db[keys[i]];
+    }
+    return new_db;
 }
 
 function render_suggestions(query){
@@ -370,7 +390,7 @@ function render_list(raw_list){
 }
 
 function bind_suggestions(){
-    var task_names = document.querySelectorAll(".suggest li span a.name");
+    var task_names = document.querySelectorAll(".suggest li a.name");
 	for (var i = 0; i < task_names.length; i++){
         var t = task_names[i];
         t.onclick = function(e){
