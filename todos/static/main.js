@@ -1,4 +1,4 @@
-
+var sug_db = {};
 
 // Mark and Item as complete when 
 function bind_checkboxes(){
@@ -127,6 +127,29 @@ function add_task(e){
     request.send(formData);
 }
 
+function add_suggestion(t){
+    
+    var formData = new FormData();
+    formData.append("name",t["name"]);
+    formData.append("category",t["category"]);
+    formData.append("list",get_list_name());
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // TODO CHeck if hash changed noticablly. If not, then return
+            // Otherwise pull down the latest DB
+            download_db();
+            // Clear Input Txt Box
+            document.querySelector("form.main div input[type='text']").value="";
+            // CLear SUggestions
+            document.querySelector("ul.suggest").innerHTML="";
+        }
+    }
+    request.open("POST", "api/items");
+    request.send(formData);
+}
+
 function bind_form(){
     var f = document.querySelector("form.main");
     f.onsubmit = function(e){
@@ -138,14 +161,10 @@ function bind_form(){
 }
 
 function bind_autocomplete(){
-    var i = document.querySelector("form.main div input[type='text']");
-    i.onkeypress = function(e){
-        //alert("Button");
-        // TODO Look for matching items in history
-        // Present them in the suggestions div
-
-        //var suggest = document.querySelector("ul.suggest");
-        //suggest.innerHTML = "Test";
+    //var i = document.querySelector("form.main div input[type='text']");
+    var i = document.querySelector("form.main div input");
+    i.onkeyup = function(e){
+        render_suggestions(e.target.value);
     }
 }
 
@@ -173,6 +192,20 @@ function bind_toggle(){
             download_db();
         }
     });
+}
+
+function download_history(){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Load the history file into a variable
+            sug_db = JSON.parse(request.responseText);
+            // TODO Sort the sug_db by number of hits in history counter
+        }
+    };
+    request.open("GET", "api/history");
+    request.send();
+    
 }
 
 function download_db(){
@@ -253,6 +286,49 @@ function sorted_list(raw_list){
     return new_list;
 }
 
+function render_suggestions(query){
+    // Switch to Lower Case for searchability
+    var low_q = query.toLowerCase();
+
+    // Get the Suggestion DOM DIV
+    var dom_list = document.querySelector("ul.suggest");
+
+    // Get a copy of the template
+    var template = document.querySelector("#suggestion_tmpl");
+    // CLear the suggestions
+    dom_list.innerHTML = "" ;
+    // TODO Strip whitespace from query
+    // If the query is empty, skip
+    if (query == ""){
+        return;
+    }
+    // Keep track of the number of suggestions
+    max_sug = 5 ;
+    i_sug = 0 ;
+    for (var key in sug_db){
+        // If you exceeded the number of suggestions, exit
+        if (i_sug >= max_sug){
+            break;
+        }
+        // If the query matches, render it
+        if (key.includes(low_q) ){ 
+
+            // Make a copy of the template element
+            var new_item = template.content.firstElementChild.cloneNode(true);
+            // Embed the key
+            new_item.setAttribute("key",key);
+            // Modify name and category
+            var txt = sug_db[key]["name"] + " - ["+sug_db[key]["category"]+"]"; 
+            new_item.querySelector(".name").textContent = txt; 
+            
+            dom_list.appendChild(new_item);
+
+            i_sug++;
+        }
+    }
+    bind_suggestions();
+}
+
 function render_task(key,name,category,completed){
     var template = document.querySelector("#task_tmpl");
     var new_item = template.content.firstElementChild.cloneNode(true);
@@ -293,6 +369,17 @@ function render_list(raw_list){
     bind_list();
 }
 
+function bind_suggestions(){
+    var task_names = document.querySelectorAll(".suggest li span a.name");
+	for (var i = 0; i < task_names.length; i++){
+        var t = task_names[i];
+        t.onclick = function(e){
+            var key = e.target.closest("li").getAttribute("key");
+            add_suggestion(sug_db[key]);
+        }
+    }
+}
+
 function bind_list(){
     bind_checkboxes();
     bind_task_edit();
@@ -309,4 +396,5 @@ function bind_all(){
 bind_all();
 
 download_db();
+download_history();
 

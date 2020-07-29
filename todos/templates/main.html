@@ -12,7 +12,7 @@
 <div class="container" style="background:aquamarine">
     <div class="text-center">
         <h2>Todo List</h2>
-        <div class="btn-group btn-group-lg">
+        <div class="btn-group">
             <button class="btn btn-primary active">Groceries</button>
             <button class="btn btn-primary">Target</button>
             <button class="btn btn-primary">Petsmart</button>
@@ -22,7 +22,7 @@
 
     <div class="container mt-3 pb-3">
         <form class="main">
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <input type="text" 
                         class="form-control" 
                         placeholder="Enter new item..." 
@@ -41,7 +41,7 @@
             </div>
         </form>
 
-        <ul class="list-group suggest">
+        <ul class="list-group suggest mb-3">
         </ul>
 
         <ul class="list-group main">
@@ -67,6 +67,14 @@
             </span>
             <span class="h5 ml-2">
                 <input type="checkbox" test="form-check-input" />
+            </span>
+        </li>
+    </template>
+
+    <template id="suggestion_tmpl">
+        <li class="list-group-item d-flex justify-content-between" >
+            <span class="h7" >
+                <a class="name" ></a>
             </span>
         </li>
     </template>
