@@ -21,7 +21,6 @@ def create_app(test_config=None):
     with app.app_context():
         from . import db
 
-
     @app.route('/')
     def main(name=None):
         return render_template('main.html', name=name)
@@ -34,7 +33,5 @@ def create_app(test_config=None):
     app.register_blueprint(api.bp)
 
     return app
-
-
 
 

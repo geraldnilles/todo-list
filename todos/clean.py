@@ -48,7 +48,7 @@ for uuid, item in db.items():
     conn.close()
 
     # Do not save Movies and TV shows into the autocomplete history database
-    if item["list"] == "WatchList" :
+    if item["list"] != "Groceries" :
         continue
 
 
