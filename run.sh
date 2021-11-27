@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd "$(dirname "$0")"
+
 . venv/bin/activate
 
 export FLASK_APP=todos
