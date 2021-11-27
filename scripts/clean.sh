@@ -8,7 +8,7 @@ cd ..
 
 . venv/bin/activate
 
-cd ../todos
+cd todos
 
 while true
 do
