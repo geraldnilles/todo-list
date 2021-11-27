@@ -2,6 +2,7 @@
    "name": "Nilles Todo List",
    "short_name": "ToDos",
    "display": "standalone",
+   "background_color": "#fff",
    "icons": [{
         "src": "static/icon-192.png",
         "type": "image/png",
