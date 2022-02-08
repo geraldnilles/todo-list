@@ -1,0 +1,4 @@
+global-exclude *.pyc
+graft todos/static
+graft todos/templates
+
