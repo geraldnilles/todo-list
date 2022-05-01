@@ -1,0 +1,11 @@
+[Unit]
+Description=Todo List Cleanup Script
+
+[Service]
+Type=simple
+ExecStart=/opt/todo-list/scripts/clean.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

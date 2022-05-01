@@ -4,6 +4,18 @@
 
 A mobile-optimized website for collaberating on a todo list and grocery list.
 
+Setup
+=====
+
+I am lazy so there are some hard-coded paths.  I put this repo in my /opt/ follder.
+
+Setup the venv::
+
+    python -m venv venv
+    . venv/bin/active
+    pip install flask
+
+
 Features
 ========
 

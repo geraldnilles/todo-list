@@ -1,0 +1,11 @@
+[Unit]
+Description=Todo List Server
+
+[Service]
+Type=simple
+ExecStart=/opt/todo-list/run.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
