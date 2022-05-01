@@ -1,5 +1,7 @@
 [Unit]
 Description=Todo List Cleanup Script
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple

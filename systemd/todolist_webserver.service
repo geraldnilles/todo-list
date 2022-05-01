@@ -1,5 +1,8 @@
 [Unit]
 Description=Todo List Server
+Requires=todolist_clean.service
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
