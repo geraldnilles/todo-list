@@ -10,10 +10,6 @@ cd ..
 
 cd todos
 
-while true
-do
-    sleep 3600
-    python clean.py
+python clean.py
 
-done
 

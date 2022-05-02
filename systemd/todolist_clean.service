@@ -4,9 +4,8 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/opt/todo-list/scripts/clean.sh
-Restart=always
 
 [Install]
 WantedBy=multi-user.target
