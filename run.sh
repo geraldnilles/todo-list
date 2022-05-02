@@ -6,6 +6,6 @@ cd "$(dirname "$0")"
 
 export FLASK_APP=todos
 export FLASK_ENV=development
-flask run -p 7060
+flask run -p 8081 --host=0.0.0.0
 
 

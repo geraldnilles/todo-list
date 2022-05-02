@@ -42,7 +42,7 @@ for uuid, item in db.items():
         continue
 
     # Dete from the database
-    conn = http.client.HTTPConnection("127.0.0.1",7060)
+    conn = http.client.HTTPConnection("127.0.0.1",8081)
     conn.request("DELETE","/api/items/"+uuid)
     print ("Deleted Item",conn.getresponse().status)
     conn.close()
