@@ -1,6 +1,6 @@
 [Unit]
 Description=Todo List Server
-Requires=todolist_clean.service
+Requires=todolist_clean.timer
 After=network-online.target
 Wants=network-online.target
 
