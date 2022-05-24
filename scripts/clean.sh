@@ -6,7 +6,10 @@ cd "$(dirname "$0")"
 # Jump back to the root
 cd ..
 
-. venv/bin/activate
+if [[ -d venv ]]
+then
+	. venv/bin/activate
+fi
 
 cd todos
 

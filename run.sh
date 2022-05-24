@@ -2,7 +2,10 @@
 
 cd "$(dirname "$0")"
 
-. venv/bin/activate
+if [[ -d venv ]]
+then
+	. venv/bin/activate
+fi
 
 export FLASK_APP=todos
 export FLASK_ENV=development
