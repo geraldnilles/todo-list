@@ -13,6 +13,6 @@ fi
 
 cd todos
 
-python clean.py
+./clean.py
 
 
