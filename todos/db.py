@@ -8,6 +8,8 @@ import time
 
 from flask import current_app
 
+# TODO Switch this from json to SQLLite
+
 class storage:
 
     def __init__(self,path):
